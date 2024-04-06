@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.hardware.tuxedo-control-center;
-  tuxedo-keyboard = config.boot.kernelPackages.tuxedo-keyboard;
+#  tuxedo-keyboard = config.boot.kernelPackages.tuxedo-keyboard;
 
   tuxedo-control-center = pkgs.callPackage ./tuxedo-control-center {};
 in
@@ -30,7 +30,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    hardware.tuxedo-keyboard.enable = true;
     boot.kernelModules = [
       # Tuxedo Control Center has a requirement on the minimum version
       # of "tuxedo_io" kernel module.
@@ -40,10 +39,6 @@ in
       # The respective version of the module itself is in the 
       # "src/tuxedo_io/tuxedo_io.c" file of tuxedo-keyboard
       # (i.e. the #define of MODULE_VERSION).
-      (warnIf
-        ((builtins.compareVersions tuxedo-keyboard.version "3.1.2") < 0)
-        "Tuxedo Control Center requires at least version 3.1.2 of tuxedo-keyboard (0.2.6 tuxedo_io kernel module); current version is ${tuxedo-keyboard.version}"
-        "tuxedo_io")
     ];
 
     environment.systemPackages = [ cfg.package ];

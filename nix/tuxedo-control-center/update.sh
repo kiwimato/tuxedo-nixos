@@ -30,6 +30,6 @@ node2nix \
  --development \
  --nodejs-14 \
  --input "$WORKDIR/package.json" \
- --lock "$WORKDIR/package-lock.json" \
  --output node-packages.nix \
- --composition node-composition.nix
+ --composition node-composition.nix \
+ --lock "$WORKDIR/package-lock.json" \
